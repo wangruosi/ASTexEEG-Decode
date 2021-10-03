@@ -18,7 +18,7 @@ def compute_eeg_rdm(subject_id,
 
     # --------------- LOAD --------------- #
     subj = SubjectModel(subject_id)
-    epochs = subj.load('epochs', preproc=PREPROC)
+    epochs = subj.load('epochs')
     epochs = epochs if stim_type == 'all' else epochs[stim_type]
 
     X, labels = epochs.get_data(), epochs.events[:, 2]
