@@ -13,7 +13,7 @@ from .data import SubjectModel
 from .utils import (SuperTrial, GroupStratifiedKFold)
 
 
-N_ITERS = 20
+N_ITERS = 2
 
 
 def decode_category(subject_id,
@@ -144,10 +144,10 @@ def decode_pair(subject_id,
 
 def make_estimator(method, clf):
 
-    if clf is 'lda':
+    if clf == 'lda':
         clf_fun = LinearDiscriminantAnalysis()
 
-    elif clf is 'svm':
+    elif clf == 'svm':
         clf_fun = SVC(kernel='linear')
 
     clf_kwargs = dict(scoring="roc_auc", n_jobs=-1)

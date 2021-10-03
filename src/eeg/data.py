@@ -12,11 +12,11 @@ from ..configs import eeg_dir, interim_dir
 class SubjectModel():
 
     def __init__(self, subject_id):
-        self.subject_id = subject_id
+        self.subject = f'ASTexEEG_Exp01Sub{subject_id:02d}'
         self._epo_fname = f'{self.subject}-filt-ica_ar-epo.fif.gz'
 
-    def load(self, file_type='epoch'):
-        if file_type == 'epoch':
+    def load(self, file_type='epochs'):
+        if file_type == 'epochs':
             in_path = op.join(eeg_dir, self._epo_fname)
             return mne.read_epochs(in_path)
         else:

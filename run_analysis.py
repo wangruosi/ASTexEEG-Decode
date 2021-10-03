@@ -1,17 +1,17 @@
 
 from itertools import product
 
-from src.eeg import Preprocess, Analysis
+from src.eeg import Analysis
 from src.configs import subject_ids, categories, stim_types
 
 # ---------- RUN PREPROCESSING FOR ALL PARTICIPANTS ---------- #
 
 
-def run_preprocessing():
-    preproc = Preprocess(subject_ids)
-    preproc.run('raw', save=True)
-    preproc.run('ica', save=True)
-    preproc.run('epochs', preproc='ica_ar', save=True)
+# def run_preprocessing():
+#     preproc = Preprocess(subject_ids)
+#     preproc.run('raw', save=True)
+#     preproc.run('ica', save=True)
+#     preproc.run('epochs', preproc='ica_ar', save=True)
 
 # ---------- RUN ANALYSES FOR ALL PARTICIPANTS ---------- #
 

@@ -1,5 +1,5 @@
 
-from mne.parallel import parallel_func
+# from mne.parallel import parallel_func
 from collections import defaultdict
 
 import numpy as np
@@ -9,25 +9,25 @@ from ..configs import subject_ids, N_JOBS
 from .data import GroupModel
 
 
-class Preprocess():
-    from src.eeg import preprocessing
-    preproc_funcs = {
-        'raw': preprocessing.make_raw,
-        'ica': preprocessing.make_ica,
-        'epochs': preprocessing.make_epochs
-    }
+# class Preprocess():
+#     from src.eeg import preprocessing
+#     preproc_funcs = {
+#         'raw': preprocessing.make_raw,
+#         'ica': preprocessing.make_ica,
+#         'epochs': preprocessing.make_epochs
+#     }
 
-    def __init__(self, subject_ids=None):
-        self.subject_ids = subject_ids
+#     def __init__(self, subject_ids=None):
+#         self.subject_ids = subject_ids
 
-    def run_subject(self, subject_id, preprocess_name, **kwargs):
-        preproc_func = Preprocess.preproc_funcs.get(preprocess_name)
-        preproc_func(subject_id, **kwargs)
+#     def run_subject(self, subject_id, preprocess_name, **kwargs):
+#         preproc_func = Preprocess.preproc_funcs.get(preprocess_name)
+#         preproc_func(subject_id, **kwargs)
 
-    def run(self, preprocess_name, **kwargs):
-        preproc_func = Preprocess.preproc_funcs.get(preprocess_name)
-        parallel, run_func, _ = parallel_func(preproc_func, n_jobs=N_JOBS)
-        parallel(run_func(id_, **kwargs) for id_ in self.subject_ids)
+#     def run(self, preprocess_name, **kwargs):
+#         preproc_func = Preprocess.preproc_funcs.get(preprocess_name)
+#         parallel, run_func, _ = parallel_func(preproc_func, n_jobs=N_JOBS)
+#         parallel(run_func(id_, **kwargs) for id_ in self.subject_ids)
 
 
 class Analysis():
@@ -56,7 +56,7 @@ class Analysis():
         for k, v in results.items():
             results[k] = np.array(v)
 
-        results['subject'] = [s[-5:] for s in subject_ids]
+        results['subject'] = ['Sub{s:02d}' for s in subject_ids]
         for k, v in result['info'].items():
             results[k] = v
         result['params'].pop('subject_id')

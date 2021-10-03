@@ -45,8 +45,7 @@ event_ids = {f'{condition}/object{i+1:03d}': i+1 for i, condition in
              enumerate(np.repeat(conditions, n_exemplars))}
 
 # subject ids
-subject_ids = list(
-    sorted([d.split('-')[0] for d in os.listdir(raw_dir) if d.startswith('ASTexEEG_Exp01')]))
+subject_ids = SUBJECT_IDS = list(range(1, 13)) + list(range(14, 20))
 n_subs = len(subject_ids)
 
 # preprocessing settings
