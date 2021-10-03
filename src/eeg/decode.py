@@ -161,13 +161,13 @@ def make_estimator(method, clf):
 
 
 def get_category_mapping(event_id, category):
-    if category is 'animacy':
+    if category == 'animacy':
         category_dict = {'animal': 1, 'object': 0}
         def key_maker(x): return x[2]
-    elif category is 'size':
+    elif category == 'size':
         category_dict = {'big': 1, 'small': 0}
         def key_maker(x): return x[1]
-    elif category is 'all':
+    elif category == 'all':
         category_dict = {('big', 'animal'): 1,
                          ('small', 'animal'): 2,
                          ('big', 'object'): 3,
