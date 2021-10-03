@@ -12,16 +12,13 @@ import numpy as np
 # Paths and Files
 root_dir = op.abspath(op.join(op.dirname(__file__), '..'))
 data_dir = op.join(root_dir, 'data')
-raw_dir = op.join(data_dir, 'raw_')                 # raw files
-eeg_dir = op.join(data_dir, 'processed')            # mne format .fif files
+eeg_dir = op.join(data_dir, 'preprocessed')            # mne format .fif files
 misc_dir = op.join(data_dir, 'misc')
 interim_dir = op.join(data_dir, 'interim')          # interim results
-fig_dir = op.join(data_dir, 'figures')              # figures
 
 
 # make dir if it does not exists
 [os.mkdir(eeg_dir) if not op.isdir(eeg_dir) else None]
-[os.mkdir(fig_dir) if not op.isdir(fig_dir) else None]
 [os.mkdir(interim_dir) if not op.isdir(interim_dir) else None]
 
 #######################################################################
