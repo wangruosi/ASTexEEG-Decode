@@ -13,7 +13,7 @@ from .data import SubjectModel
 from .utils import (SuperTrial, GroupStratifiedKFold)
 
 
-N_ITERS = 2
+N_ITERS = 20
 
 
 def decode_category(subject_id,
