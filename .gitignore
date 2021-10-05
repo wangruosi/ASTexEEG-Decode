@@ -4,4 +4,4 @@ __pycache__
 .DS_Store
 
 data
-run.py
+run_analysis.py
