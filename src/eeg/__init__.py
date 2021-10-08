@@ -5,7 +5,7 @@ from collections import defaultdict
 import numpy as np
 
 from . import decode, distance, quality
-from ..configs import subject_ids, N_JOBS
+from ..configs import SUBJECT_IDS, N_JOBS
 from .data import GroupModel
 
 
@@ -56,7 +56,7 @@ class Analysis():
         for k, v in results.items():
             results[k] = np.array(v)
 
-        results['subject'] = ['Sub{s:02d}' for s in subject_ids]
+        results['subject'] = ['Sub{s:02d}' for s in SUBJECT_IDS]
         for k, v in result['info'].items():
             results[k] = v
         result['params'].pop('subject_id')

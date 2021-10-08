@@ -1,6 +1,6 @@
 
 
-from ..configs import conditions
+from ..configs import CONDITIONS
 from .data import SubjectModel
 
 
@@ -17,7 +17,7 @@ def count_num_of_trials(subject_id, by='stimulus'):
     if by == 'stimulus':
         labels = list(epochs.event_id.keys())
     elif by == 'condition':
-        labels = conditions
+        labels = CONDITIONS
     else:
         raise ValueError
 
