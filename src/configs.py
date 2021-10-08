@@ -14,7 +14,7 @@ root_dir = op.abspath(op.join(op.dirname(__file__), '..'))
 data_dir = op.join(root_dir, 'data')
 eeg_dir = op.join(data_dir, 'preprocessed')            # mne format .fif files
 misc_dir = op.join(data_dir, 'misc')
-result_dir = op.join(data_dir, 'results')          # results
+result_dir = op.join(root_dir, 'results')          # results
 
 
 # make dir if it does not exists
