@@ -2,7 +2,7 @@
 from itertools import product
 
 from .eeg import Analysis
-from .configs import subject_ids, categories, stim_types
+from .configs import SUBJECT_IDS, CATEGORIES, STIM_TYPES
 
 # ---------- RUN PREPROCESSING FOR ALL PARTICIPANTS ---------- #
 
@@ -17,8 +17,8 @@ from .configs import subject_ids, categories, stim_types
 
 
 def run_category_decoding(cross=False):
-    ana = Analysis(subject_ids)
-    for category, stim_type in product(categories, stim_types):
+    ana = Analysis(SUBJECT_IDS)
+    for category, stim_type in product(CATEGORIES, STIM_TYPES):
         ana.run('decode_category', stim_type=stim_type,
                 category=category, cross=cross)
 
@@ -26,26 +26,26 @@ def run_category_decoding(cross=False):
     # run_get_latency(category)
 
 def run_eeg_rdm():
-    ana = Analysis(subject_ids)
+    ana = Analysis(SUBJECT_IDS)
     ana.run('rdm_eeg')
 
 
 def run_pairwise_decoding(cross=False):
-    ana = Analysis(subject_ids)
-    for stim_type in stim_types:
+    ana = Analysis(SUBJECT_IDS)
+    for stim_type in STIM_TYPES:
         ana.run('decode_pair', stim_type=stim_type, cross=cross)
 
 
 def run_tripartite_size_decoding():
-    ana = Analysis(subject_ids)
+    ana = Analysis(SUBJECT_IDS)
     subtypes = ['animal', 'object']
-    for subtype, stim_type in product(subtypes, stim_types):
+    for subtype, stim_type in product(subtypes, STIM_TYPES):
         ana.run('decode_category',
                 stim_type=f'{stim_type}_{subtype}', category='size')
 
 
 def run_qa_n_trials():
-    ana = Analysis(subject_ids)
+    ana = Analysis(SUBJECT_IDS)
     ana.run('qa_n_trials', by='stimulus')
     ana.run('qa_n_trials', by='condition')
 

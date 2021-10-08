@@ -8,7 +8,7 @@ from mne.decoding import (GeneralizingEstimator,
                           SlidingEstimator, cross_val_multiscore)
 
 
-from ..configs import (RANDOM_STATE, N_SUPER, CLF_NAME, PREPROC)
+from ..configs import (RANDOM_STATE, N_SUPER, CLF_NAME)
 from .data import SubjectModel
 from .utils import (SuperTrial, GroupStratifiedKFold)
 

@@ -24,29 +24,15 @@ interim_dir = op.join(data_dir, 'interim')          # interim results
 #######################################################################
 
 # Experiment Designs
-stim_types = ('original', 'texform')
-levels = dict(size=('big', 'small'),
+STIM_TYPES = ('original', 'texform')
+LEVELS = dict(size=('big', 'small'),
               animacy=('animal', 'object'))
-categories = list(levels.keys())
-conditions = tuple(map(lambda x: '/'.join(x),
-                       product(stim_types, *levels.values())))
-
-n_stim_types = len(stim_types)
-n_trials_per_run = 240
-n_runs_per_stim_type = 6
-n_runs_total = n_runs_per_stim_type * n_stim_types
-n_trials_per_stim_type = n_trials_per_run * n_runs_per_stim_type
-n_trials_total = n_trials_per_run * n_runs_total
-
-n_exemplars = 15
-n_stimulus = n_exemplars * len(conditions)
-trigger_ids = {f'Stimulus/S{i+1:3d}': i+1 for i in range(n_stimulus)}
-event_ids = {f'{condition}/object{i+1:03d}': i+1 for i, condition in
-             enumerate(np.repeat(conditions, n_exemplars))}
+CATEGORIES = list(LEVELS.keys())
+CONDITIONS = tuple(map(lambda x: '/'.join(x),
+                       product(STIM_TYPES, *LEVELS.values())))
 
 # subject ids
-subject_ids = SUBJECT_IDS = list(range(1, 13)) + list(range(14, 20))
-n_subs = len(subject_ids)
+SUBJECT_IDS = SUBJECT_IDS = list(range(1, 13)) + list(range(14, 20))
 
 # preprocessing settings
 TMIN, TMAX = -.1, .9    # tmin, tmax for epoching
@@ -61,3 +47,20 @@ N_SUPER = 6             # numbet of super trials
 
 RANDOM_STATE = 314
 N_JOBS = 6
+
+# design numbers
+n_stim_types = len(STIM_TYPES)
+n_trials_per_run = 240
+n_runs_per_stim_type = 6
+n_runs_total = n_runs_per_stim_type * n_stim_types
+n_trials_per_stim_type = n_trials_per_run * n_runs_per_stim_type
+n_trials_total = n_trials_per_run * n_runs_total
+
+n_exemplars = 15
+n_stimulus = n_exemplars * len(CONDITIONS)
+n_subs = len(SUBJECT_IDS)
+
+# mapping ids for MNE preprocessing
+trigger_ids = {f'Stimulus/S{i+1:3d}': i+1 for i in range(n_stimulus)}
+event_ids = {f'{condition}/object{i+1:03d}': i+1 for i, condition in
+             enumerate(np.repeat(CONDITIONS, n_exemplars))}
