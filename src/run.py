@@ -16,10 +16,9 @@ from .configs import subject_ids, categories, stim_types
 # ---------- RUN ANALYSES FOR ALL PARTICIPANTS ---------- #
 
 
-def run_category_decoding(cross):
+def run_category_decoding(cross=False):
     ana = Analysis(subject_ids)
-    cross_choices = [False, True]
-    for cross, category, stim_type in product(cross_choices, categories, stim_types):
+    for category, stim_type in product(categories, stim_types):
         ana.run('decode_category', stim_type=stim_type,
                 category=category, cross=cross)
 
@@ -31,10 +30,9 @@ def run_eeg_rdm():
     ana.run('rdm_eeg')
 
 
-def run_pairwise_decoding():
+def run_pairwise_decoding(cross=False):
     ana = Analysis(subject_ids)
-    cross_choices = [False, True]
-    for cross, stim_type in product(cross_choices, stim_types):
+    for stim_type in stim_types:
         ana.run('decode_pair', stim_type=stim_type, cross=cross)
 
 
@@ -50,3 +48,10 @@ def run_qa_n_trials():
     ana = Analysis(subject_ids)
     ana.run('qa_n_trials', by='stimulus')
     ana.run('qa_n_trials', by='condition')
+
+
+def run_get_latency():
+    from .stats.timing import get_latencies
+    categories = ('animacy', 'size')
+    for category in categories:
+        get_latencies(category)
