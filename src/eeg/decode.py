@@ -100,7 +100,7 @@ def decode_pair(subject_id,
     epochs_counts = list(map(lambda x: x.shape[0], epochs_data_list))
 
     n_labels, n_times = len(epochs_data_list), len(epochs.times)
-    scores = np.zeros((n_times, n_labels * (n_labels) // 2))
+    scores = np.zeros((n_labels * (n_labels-1) // 2, n_times))
 
     est = make_estimator('sliding', CLF_NAME)
     sss = StratifiedShuffleSplit(n_splits=5, test_size=.2)
@@ -124,7 +124,7 @@ def decode_pair(subject_id,
 
     return {
         'info': dict(timepoint=epochs.times),
-        'score': scores.mean(-1),
+        'score': scores.mean(0),
     }
 
 # make decoding pipeline

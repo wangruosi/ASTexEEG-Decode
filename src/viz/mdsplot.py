@@ -22,7 +22,7 @@ def plot_cross_decoding_viz(category, metric='euclid', timepoint=.18,
     results = grp.load('rdm_eeg', stim_type='all', metric='euclid', whiten=True)
     times = results['timepoint'].squeeze()
     tid = np.where(times==timepoint)[0][0]
-    rdm = results['rdm'].mean(0)[tid]
+    rdm = results['rdm'][tid]
 
     mds = MDS(n_components=2, dissimilarity='precomputed',
               random_state=random_state)

@@ -59,7 +59,7 @@ def plot_category_decoding(category, args_list, **kwargs):
         yaxis_range = 'large'
     else:
         yaxis_range = 'small'
-    make_decoding_plot(_make_category_decoding_df(args_list, category),
+    make_decoding_plot(_make_decoding_df('category', args_list, category=category),
                        palette=_get_param_dict(args_list, 'color'),
                        dashes=_get_param_dict(args_list, 'dash'),
                        yaxis_range=yaxis_range, **kwargs)
@@ -69,7 +69,7 @@ def plot_tri_category_decoding(stim_type, **kwargs):
     args_list = [(f'{stim_type}_animal', False),
                  (f'{stim_type}_object', False)]
     alpha = .5 if stim_type == 'original' else 1
-    make_decoding_plot(_make_category_decoding_df(args_list, 'size'),
+    make_decoding_plot(_make_decoding_df('category', args_list, category='size'),
                        palette=_get_param_dict(args_list, 'color'),
                        dashes=_get_param_dict(args_list, 'dash'),
                        yaxis_range='medium', alpha=alpha, **kwargs)
@@ -78,7 +78,7 @@ def plot_tri_category_decoding(stim_type, **kwargs):
 def plot_pair_decoding(cross=False, **kwargs):
     args_list = [('original', cross),
                  ('texform', cross)]
-    make_decoding_plot(_make_pair_decoding_df(args_list),
+    make_decoding_plot(_make_decoding_df('pair', args_list),
                        palette=_get_param_dict(args_list, 'color'),
                        dashes=_get_param_dict(args_list, 'dash'),
                        compare=True, yaxis_range='medium', **kwargs)
@@ -146,32 +146,13 @@ def make_decoding_plot(df, palette=None, dashes=None, legend=False, alpha=1,
 
 
 
-def _make_category_decoding_df(args_list, category):
+def _make_decoding_df(decode_type, args_list, **kwargs):
     grp = GroupModel()
     dfs = []
     for (stim_type, cross) in args_list:
-        results =grp.load('decode_category', stim_type=stim_type, category=category, cross=cross)
+        results =grp.load(f'decode_{decode_type}', stim_type=stim_type, cross=cross, **kwargs)
         scores, times = results['score'], results['timepoint'].squeeze()
         
-        dfs.append(
-            make_df(scores, times, label=DECODE_MAPPINGS[(
-                stim_type, cross)]['label'])
-        )
-    return pd.concat(dfs, ignore_index=True)
-
-
-def _make_pair_decoding_df(args_list):
-    grp = GroupModel()
-    dfs = []
-    for (stim_type, cross) in args_list:
-        results = grp.load('decode_pair', stim_type=stim_type, cross=cross)
-        scores = results['score'].transpose(0, 3, 1, 2)
-        n_subs, n_times = scores.shape[:2]
-
-        times = results['timepoint'].squeeze()
-        scores = np.array([[squareform(scores[s, t]).mean()
-                           for t in range(n_times)]
-                           for s in range(n_subs)])
         dfs.append(
             make_df(scores, times, label=DECODE_MAPPINGS[(
                 stim_type, cross)]['label'])
