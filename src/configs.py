@@ -14,12 +14,12 @@ root_dir = op.abspath(op.join(op.dirname(__file__), '..'))
 data_dir = op.join(root_dir, 'data')
 eeg_dir = op.join(data_dir, 'preprocessed')            # mne format .fif files
 misc_dir = op.join(data_dir, 'misc')
-interim_dir = op.join(data_dir, 'interim')          # interim results
+result_dir = op.join(data_dir, 'results')          # results
 
 
 # make dir if it does not exists
 [os.mkdir(eeg_dir) if not op.isdir(eeg_dir) else None]
-[os.mkdir(interim_dir) if not op.isdir(interim_dir) else None]
+[os.mkdir(result_dir) if not op.isdir(result_dir) else None]
 
 #######################################################################
 

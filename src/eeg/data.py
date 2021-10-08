@@ -6,7 +6,7 @@ import os.path as op
 from scipy.io import loadmat, savemat
 import mne
 
-from ..configs import eeg_dir, interim_dir
+from ..configs import eeg_dir, result_dir
 
 
 class SubjectModel():
@@ -32,7 +32,7 @@ class GroupModel():
 
     def __init__(self):
         for ana in GroupModel.analyses:
-            ana_dir = op.join(interim_dir, ana)
+            ana_dir = op.join(result_dir, ana)
             if not op.isdir(ana_dir):
                 os.mkdir(ana_dir)
 
@@ -41,12 +41,12 @@ class GroupModel():
 
         params = {k: kwargs[k] for k in GroupModel.analyses[analysis]}
         label = "-".join([f'{k}.{v}' for k, v in params.items()])
-        load_file = op.join(interim_dir, analysis,
+        load_file = op.join(result_dir, analysis,
                             f'{analysis}-{label}.mat')
         return loadmat(load_file)
 
     def save(self, analysis, data_to_save, params_label):
         assert(analysis in GroupModel.analyses)
-        save_file = op.join(interim_dir, analysis,
+        save_file = op.join(result_dir, analysis,
                             f'{analysis}-{params_label}.mat')
         savemat(save_file, data_to_save, do_compression=True)

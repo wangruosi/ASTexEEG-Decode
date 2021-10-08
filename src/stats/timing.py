@@ -7,7 +7,7 @@ from detecta import detect_peaks
 from scipy.stats import wilcoxon
 from scipy.io import savemat
 
-from ..configs import interim_dir, RANDOM_STATE, T_RANGE
+from ..configs import result_dir, RANDOM_STATE, T_RANGE
 from ..eeg.data import GroupModel
 
 
@@ -42,7 +42,7 @@ def get_latencies(category):
             find_peak, scores, times, n_iters=N_ITERS, random_state=RANDOM_STATE)
 
     results['timepoint'] = times
-    out_path = os.path.join(interim_dir, 'timing_latency', 
+    out_path = os.path.join(result_dir, 'timing_latency', 
                             f'timing_latency-category.{category}.mat')
     savemat(out_path, results)
 
