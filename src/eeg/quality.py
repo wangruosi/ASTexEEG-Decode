@@ -25,6 +25,5 @@ def count_num_of_trials(subject_id, by='stimulus'):
 
     return {
         'info': dict(label=labels),
-        'params': params,
         'n_trials': n_trials
     }

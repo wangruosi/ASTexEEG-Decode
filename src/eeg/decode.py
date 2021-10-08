@@ -48,14 +48,8 @@ def decode_category(subject_id,
 
     spt = SuperTrial(epochs[stim_type], N_SUPER)
 
-    n_times = len(spt.times)
-    n_total_super = len(spt.classes) * N_SUPER
-    n_components = len(set(category_mapping.values())) - 1
-    projections = np.full(
-        (N_ITERS, n_total_super, n_times, n_components), np.nan)
-
     scores = []
-    for i_iter in range(N_ITERS):
+    for _ in range(N_ITERS):
 
         # Compute super-trials
         X, labels = spt.split_average()
@@ -71,16 +65,11 @@ def decode_category(subject_id,
 
             est.fit(X_train, y_train)
             scores.append(est.score(X_test, y_test))
-            projections[i_iter, test] = est.transform(X_test)
-            # dec_values[i_iter, test] = est.decision_function(X_test)
 
     return {
         'info': dict(timepoint=spt.times),
-        'params': params,
-        'score': np.array(scores).mean(0),
-        'projection': np.mean(np.reshape(projections,
-                                         (N_ITERS, -1, N_SUPER, n_times, n_components)), axis=(0, 2)).squeeze()
-    }
+        'score': np.array(scores).mean(0)
+        }
 
 
 def decode_pair(subject_id,
@@ -111,32 +100,31 @@ def decode_pair(subject_id,
     epochs_counts = list(map(lambda x: x.shape[0], epochs_data_list))
 
     n_labels, n_times = len(epochs_data_list), len(epochs.times)
-    scores = np.zeros((n_labels, n_labels, n_times))
+    scores = np.zeros((n_times, n_labels * (n_labels) // 2))
 
     est = make_estimator('sliding', CLF_NAME)
     sss = StratifiedShuffleSplit(n_splits=5, test_size=.2)
 
-    for c1, c2 in combinations(range(n_labels), 2):
+    for ii, (c1, c2) in enumerate(combinations(range(n_labels), 2)):
         X = np.concatenate([epochs_data_list[c1],
                             epochs_data_list[c2]])
         y = np.concatenate([np.ones(epochs_counts[c1]),
                             -np.ones(epochs_counts[c2])])
 
         if not cross:
-            scores[c1, c2] = scores[c2, c1] = np.mean(cross_val_multiscore(
+            scores[ii] = np.mean(cross_val_multiscore(
                 est, X, y, cv=sss), axis=0)
         else:
             cross_X = np.concatenate([cross_epochs_data_list[c1],
                                       cross_epochs_data_list[c2]])
             cross_y = np.concatenate([np.ones(cross_epochs_counts[c1]),
                                       -np.ones(cross_epochs_counts[c2])])
-            scores[c1, c2] = scores[c2, c1] = np.mean(_cross_val_multiscore(
+            scores[ii] = np.mean(_cross_val_multiscore(
                 est, X, y, cross_X, cross_y, cv=sss), axis=0)
 
     return {
         'info': dict(timepoint=epochs.times),
-        'params': params,
-        'score': scores,
+        'score': scores.mean(-1),
     }
 
 # make decoding pipeline

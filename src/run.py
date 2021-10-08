@@ -27,7 +27,7 @@ def run_category_decoding(cross=False):
 
 def run_eeg_rdm():
     ana = Analysis(SUBJECT_IDS)
-    ana.run('rdm_eeg')
+    ana.run('rdm_eeg', group_averaging=True, stim_type='all')
 
 
 def run_pairwise_decoding(cross=False):

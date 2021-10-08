@@ -27,7 +27,7 @@ class GroupModel():
     analyses = {'decode_category': ['stim_type', 'category', 'cross'],
                 'decode_pair': ['stim_type', 'cross'],
                 'qa_n_trials': ['by'],
-                'rdm_eeg': ['stim_type', 'metric', 'whiten'],
+                'rdm_eeg': ['stim_type'],
                 'timing_latency': ['category']}
 
     def __init__(self):
@@ -36,7 +36,7 @@ class GroupModel():
             if not op.isdir(ana_dir):
                 os.mkdir(ana_dir)
 
-    def load(self, analysis, log=False, **kwargs):
+    def load(self, analysis, **kwargs):
         assert(analysis in GroupModel.analyses)
 
         params = {k: kwargs[k] for k in GroupModel.analyses[analysis]}
@@ -45,10 +45,8 @@ class GroupModel():
                             f'{analysis}-{label}.mat')
         return loadmat(load_file)
 
-    def save(self, analysis, data_to_save, log=True):
+    def save(self, analysis, data_to_save, params_label):
         assert(analysis in GroupModel.analyses)
         save_file = op.join(interim_dir, analysis,
-                            f'{analysis}-{data_to_save["params"]}.mat')
-        if log:
-            print(f'Save results to {save_file}...')
-        savemat(save_file, data_to_save)
+                            f'{analysis}-{params_label}.mat')
+        savemat(save_file, data_to_save, do_compression=True)

@@ -10,9 +10,7 @@ PREPROC = 'ica_ar'
 
 
 def compute_eeg_rdm(subject_id,
-                    stim_type='all',
-                    metric='euclid',
-                    whiten=True):
+                    stim_type='all'):
     '''compute rdm for an individual subject'''
     params = locals()
 
@@ -23,15 +21,14 @@ def compute_eeg_rdm(subject_id,
 
     X, labels = epochs.get_data(), epochs.events[:, 2]
     rdms = get_noncv_dist(
-        X, labels, metric=metric, whiten=whiten)
+        X, labels, metric='euclid', whiten=True)
     # --------------- SAVE --------------- #
     # specify variable info and make sure it matches the result
     var_info = dict(stimulus=np.unique(labels),
                     timepoint=epochs.times)
     return {
         'info': var_info,
-        'params': params,
-        'rdm': rdms,
+        'rdm': rdms.astype(np.float32),
     }
 
 
