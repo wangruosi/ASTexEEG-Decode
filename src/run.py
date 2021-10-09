@@ -36,12 +36,12 @@ def run_pairwise_decoding(sids=SUBJECT_IDS, cross=False):
         ana.run('decode_pair', stim_type=stim_type, cross=cross)
 
 
-def run_tripartite_size_decoding(sids=SUBJECT_IDS):
+def run_tripartite_size_decoding(sids=SUBJECT_IDS, cross=False):
     ana = Analysis(sids)
     subtypes = ['animal', 'object']
     for subtype, stim_type in product(subtypes, STIM_TYPES):
         ana.run('decode_category',
-                stim_type=f'{stim_type}_{subtype}', category='size')
+                stim_type=f'{stim_type}_{subtype}', category='size', cross=cross)
 
 
 def run_qa_n_trials(sids=SUBJECT_IDS):

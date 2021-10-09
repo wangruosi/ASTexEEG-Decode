@@ -65,9 +65,6 @@ def plot_cross_decoding_viz(category, metric='euclid', timepoint=.18,
     ax.set_axis_off()
     plt.subplots_adjust(top=1, bottom=0, left=0, right=1)
 
-    if save:
-        plt.savefig(f'{fig_dir}/{save}-cross_decoding_viz.png')
-
 
 def plot_tri_decoding_viz(stim_type, animacy, metric='euclid', timepoint=.18,
                           random_state=RANDOM_STATE, s=3, figsize=(3, 3), ax=None, save=False):
@@ -95,7 +92,7 @@ def plot_tri_decoding_viz(stim_type, animacy, metric='euclid', timepoint=.18,
     results = grp.load('rdm_eeg', stim_type='all', metric='euclid', whiten=True)
     times = results['timepoint'].squeeze()
     tid = np.where(times == timepoint)[0][0]
-    rdm = results['rdm'].mean(0)[tid]
+    rdm = results['rdm'][tid]
 
     # 2D projection
     mds = MDS(n_components=2, dissimilarity='precomputed',
@@ -122,9 +119,6 @@ def plot_tri_decoding_viz(stim_type, animacy, metric='euclid', timepoint=.18,
     ax.set_axis_off()
     ax.set(xlim=(xmin, xmax), ylim=(ymin, ymax))
     plt.tight_layout()
-
-    if save:
-        plt.savefig(f'{fig_dir}/{save}-tri_decoding_viz.png')
 
 
 def _get_extent(img_shape, pos, shrink=100):
