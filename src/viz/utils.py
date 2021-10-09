@@ -15,6 +15,7 @@ def set_rcParams(mode, update_kwargs=None):
         mpl.rcParams.update(mpl.rcParamsDefault)
         mpl.rcParams['font.size'] = 7
         mpl.rcParams['ytick.labelsize'] = 6
+        mpl.rcParams['figure.dpi'] = 150
         mpl.rcParams['xtick.labelsize'] = 6
         mpl.rcParams['lines.linewidth'] = .8
         mpl.rcParams['lines.markersize'] = 2
