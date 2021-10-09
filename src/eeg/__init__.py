@@ -1,14 +1,19 @@
 
 # from mne.parallel import parallel_func
+import os.path as op
 import time
 from collections import defaultdict
+import logging
 
 import numpy as np
 
 from . import decode, distance, quality
-from ..configs import SUBJECT_IDS, N_JOBS
+from ..configs import result_dir
 from .data import GroupModel
 
+
+logging.basicConfig(filename=op.join(result_dir, 'run.log'), level=logging.INFO,
+                    format='%(levelname)s:%(message)s')
 
 # class Preprocess():
 #     from src.eeg import preprocessing
@@ -46,7 +51,8 @@ class Analysis():
     def run(self, analysis_name, group_averaging=False, **kwargs):
 
         tstart = time.time()
-        print(f'\n{analysis_name} start...')
+        params_label = "-".join([f'{k}.{v}' for k, v in kwargs.items()])
+        logging.info(f'{analysis_name}-{params_label} start...')
     
         ana_func = Analysis.ana_funcs.get(analysis_name)
         grpm, results = GroupModel(), defaultdict(list)
@@ -72,6 +78,6 @@ class Analysis():
         if not group_averaging:
             results['subject'] = [f'Sub{s:02d}' for s in self.subject_ids]
         
-        params_label = "-".join([f'{k}.{v}' for k, v in kwargs.items()])
+        
         grpm.save(analysis_name, results, params_label)
-        print(f'{analysis_name} finished ({(time.time()-tstart)/60:.2f} mins)\n')
+        logging.info(f'{analysis_name} finished ({(time.time()-tstart)/60:.2f} mins)\n')
