@@ -71,7 +71,7 @@ def plot_tri_category_decoding(stim_type, **kwargs):
     alpha = .5 if stim_type == 'original' else 1
     make_decoding_plot(_make_decoding_df('category', args_list, category='size'),
                        palette=_get_param_dict(args_list, 'color'),
-                       dashes=_get_param_dict(args_list, 'dash'),
+                       dashes=_get_param_dict(args_list, 'dash'), compare=True,
                        yaxis_range='medium', alpha=alpha, **kwargs)
 
 
