@@ -69,9 +69,12 @@ def plot_tri_category_decoding(stim_type, **kwargs):
     args_list = [(f'{stim_type}_animal', False),
                  (f'{stim_type}_object', False)]
     alpha = .5 if stim_type == 'original' else 1
+    grpm = GroupModel()
+    ref_score = grpm.load('decode_category', stim_type=stim_type, category='size', cross=False)['score'].mean(0)
     make_decoding_plot(_make_decoding_df('category', args_list, category='size'),
                        palette=_get_param_dict(args_list, 'color'),
-                       dashes=_get_param_dict(args_list, 'dash'), compare=True,
+                       dashes=_get_param_dict(args_list, 'dash'), 
+                       compare=True, ref_score=ref_score,
                        yaxis_range='medium', alpha=alpha, **kwargs)
 
 
@@ -106,7 +109,7 @@ def make_decoding_plot(df, palette=None, dashes=None, legend=False, alpha=1,
     if not legend:
         ax.get_legend().remove()
 
-    if ref_score:
+    if ref_score is not None:
         ax.plot(times, ref_score, color='dimgray', alpha=alpha, lw=.7)
 
     ax.axhline(0.5,  color='black')
@@ -142,7 +145,6 @@ def make_decoding_plot(df, palette=None, dashes=None, legend=False, alpha=1,
                          facecolor='k', edgecolor='none', alpha=.8))
     ax.text(*params['stimulus_position'],
             'stimulus', horizontalalignment='center')
-
 
 
 
