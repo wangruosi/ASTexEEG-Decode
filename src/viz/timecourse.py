@@ -26,6 +26,15 @@ DECODE_MAPPINGS = {
     ('texform_object', False): dict(label='big vs small objects', color='forestgreen', dash=''),
 }
 
+# 
+# 'small': dict(
+#     ylim=(.44, .66),
+#     yticks=np.arange(.4, .7, .05),
+#     sig_start_y=.655,
+#     sig_unit=.005,
+#     stimulus_polygon=[[0, .442], [.1, .448], [.32, .448], [0.4, .442]],
+#     stimulus_position=(.2, .452)
+
 AXES_PARAMS = {
     'large': dict(
         ylim=(.38, .82),
@@ -36,12 +45,12 @@ AXES_PARAMS = {
         stimulus_position=(.2, .404)
     ),
     'small': dict(
-        ylim=(.44, .66),
-        yticks=np.arange(.4, .7, .05),
-        sig_start_y=.655,
-        sig_unit=.005,
-        stimulus_polygon=[[0, .442], [.1, .448], [.32, .448], [0.4, .442]],
-        stimulus_position=(.2, .452)
+    ylim=(.45, .60),
+    yticks=np.arange(.4, .61, .05),
+    sig_start_y=.598,
+    sig_unit=.003,
+    stimulus_polygon=[[0, .4515], [.1, .455], [.32, .455], [0.4, .4515]],
+    stimulus_position=(.2, .458)
     ),
     'medium': dict(
         ylim=(.44, .73),
