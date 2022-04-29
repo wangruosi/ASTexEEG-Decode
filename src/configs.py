@@ -32,7 +32,7 @@ CONDITIONS = tuple(map(lambda x: '/'.join(x),
                        product(STIM_TYPES, *LEVELS.values())))
 
 # subject ids
-SUBJECT_IDS = SUBJECT_IDS = list(range(1, 13)) + list(range(14, 20))
+SUBJECT_IDS = list(range(1, 13)) + list(range(14, 20))
 
 # preprocessing settings
 TMIN, TMAX = -.1, .9    # tmin, tmax for epoching

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.manifold import MDS
 
-from ..configs import RANDOM_STATE, data_dir
+from ..configs import RANDOM_STATE, result_dir
 from ..eeg.data import GroupModel
 
 
@@ -131,7 +131,7 @@ def _get_extent(img_shape, pos, shrink=100):
 
 
 def _load_icons():
-    return np.load(os.path.join(data_dir, 'imageset', 'icons.npy'),
+    return np.load(os.path.join(result_dir, 'imageset', 'icons.npy'),
                    allow_pickle=True)
 
 
